@@ -11,7 +11,7 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'maks2531', variable: 'dockerpwd')]) {
                     sh "docker login -u maks2531 -p ${dockerpwd}"
-                    sh "docker push maks/maskwebsite:latest"
+                    sh "docker push maks2351/makskwebsite:latest"
                 }
             }
         }
