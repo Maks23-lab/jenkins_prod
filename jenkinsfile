@@ -4,9 +4,24 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'ls -la'
                 sh 'docker build -t maskwebsite .'   
+            }
+        }
+        stage('Push') {
+            steps {
+                withCredentials([string(credentialsId: 'DockerHubPwd', variable: 'dockerpwd')]) {
+                    sh "docker login -u maks -p ${dockerpwd}"
+                    sh "docker push maks/maskwebsite:latest"
+                }
+            }
+        }
+        stage('Clean') {
+            steps {
+                sh "docker rmi -f $(docker images -aq)"
             }
         }
     }
 }
+
+
+
