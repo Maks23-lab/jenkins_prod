@@ -4,15 +4,14 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker build -t maks2531/makswebsite:letest .'   
+                sh 'docker build -t maskwebsite/makswebsite:latest .'   
             }
         }
         stage('Push') {
             steps {
-                withCredentials([string(credentialsId: 'docker-hub-maks', url: 'https://index.docker.io/v1/')]) {
-                    sh '''
-                        docker push maks2531/makswebsite:letest
-                    '''
+                withCredentials([string(credentialsId: 'maks2531', variable: 'dockerpwd')]) {
+                    sh 'echo "${dockerpwd}" | docker login --username maks2531 --password-stdin'
+                    sh "docker push maks2351/makswebsite:latest"
                 }
             }
         }
