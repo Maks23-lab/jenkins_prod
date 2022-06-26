@@ -4,15 +4,21 @@ pipeline {
     stages {
         stage('Build') {
             steps {
+                sh 'docker image ls'
                 sh 'docker build -t makswebsite .'
-                sh 'docker tag makswebsite maks2531/makswebsite:makswebsite'
+            }
+        }
+        stage('test') {
+            steps {
+                sh 'docker image ls'
+                sh 'docker tag makswebsite maks2531/makswebsite:lastles'
             }
         }
         stage('Push') {
             steps {
                 withCredentials([string(credentialsId: 'maks2531', variable: 'dockerpwd')]) {
                     sh 'echo "${dockerpwd}" | docker login --username maks2531 --password-stdin'
-                    sh "docker push maks2351/makswebsite:makswebsite"
+                    sh 'docker push maks2531/makswebsite:lastles'
                 }
             }
         }
@@ -23,4 +29,3 @@ pipeline {
         }
     }
 }
-
