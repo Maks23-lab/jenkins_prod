@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker build -t maskwebsite/makswebsite .'   
+                sh 'docker build -t maks2531/makswebsite .'   
             }
         }
         stage('Push') {
