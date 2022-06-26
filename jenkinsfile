@@ -13,7 +13,6 @@ pipeline {
         bat "docker push maks2531/makswebsite"
                 }
             }
-        }
         stage('Clean') {
             steps {
                 sh 'docker rmi -f $(docker images -aq)'
