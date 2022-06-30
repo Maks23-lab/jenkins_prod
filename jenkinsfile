@@ -1,5 +1,5 @@
 pipeline {
-    agent maks
+    agent master
 
     stages {
         stage('Build') {
