@@ -1,0 +1,11 @@
+pipeline {
+    agent { label 'slave' }
+
+    stages {
+        stage('Deploy') {
+            steps {
+              sh "docker run -d -p 80:80 maks2531/makswebsite"
+              }
+          }
+      }
+ }
