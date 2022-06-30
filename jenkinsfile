@@ -11,14 +11,14 @@ pipeline {
         stage('test') {
             steps {
                 sh 'docker image ls'
-                sh 'docker tag makswebsite maks2531/makswebsite:lastles'
+                sh 'docker tag makswebsite maks2531/makswebsite:$BUILD_NUMBER'
             }
         }
         stage('Push') {
             steps {
                 withCredentials([string(credentialsId: 'maks2531', variable: 'dockerpwd')]) {
                     sh 'echo "${dockerpwd}" | docker login --username maks2531 --password-stdin'
-                    sh 'docker push maks2531/makswebsite:lastles'
+                    sh 'docker push maks2531/makswebsite:$BUILD_NUMBER'
                 }
             }
         }
