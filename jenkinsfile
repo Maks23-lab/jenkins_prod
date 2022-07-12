@@ -19,6 +19,7 @@ pipeline {
                 withCredentials([string(credentialsId: 'maks2531', variable: 'dockerpwd')]) {
                     sh 'echo "${dockerpwd}" | docker login --username maks2531 --password-stdin'
                     sh 'docker push maks2531/makswebsite:$BUILD_NUMBER'
+                    build job: 'deploypipeline'
                 }
             }
         }
