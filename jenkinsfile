@@ -5,13 +5,12 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'docker image ls'
-                sh 'docker build -t makswebsite .'
+                sh 'docker build -t maks2531/makswebsite:latest -t maks2531/makswebsite:$BUILD_NUMBER.'
             }
         }
         stage('test') {
             steps {
                 sh 'docker image ls'
-                sh 'docker tag makswebsite maks2531/makswebsite:$BUILD_NUMBER'
             }
         }
         stage('Push') {
