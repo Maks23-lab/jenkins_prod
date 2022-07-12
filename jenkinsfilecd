@@ -4,7 +4,8 @@ pipeline {
     stages {
         stage('Deploy') {
             steps {
-              sh 'sleep 15'
+              sh 'docker kill $(docker ps -q) || echo "no running containers"'
+              sh  'docker rmi -f $(docker images -aq)'
               sh "docker run -d -p 80:80 maks2531/makswebsite"
               }
           }
