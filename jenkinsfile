@@ -25,7 +25,7 @@ pipeline {
     }
 post { 
         always { 
-            sh 'docker kill $(docker ps -q)'
+            sh 'docker kill $(docker ps -q) ||echo "no running containers"'
             sh  'docker rmi -f $(docker images -aq)'
         }
     }
