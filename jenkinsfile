@@ -5,11 +5,12 @@ pipeline {
         stage('Build') {
             steps {
                 sh 'docker image ls'
-                sh 'docker build -t maks2531/makswebsite:latest -t maks2531/makswebsite:$BUILD_NUMBER.'
+                sh 'docker build -t makswebsite .'
             }
         }
         stage('test') {
             steps {
+                sh 'docker tag makswebsite maks2531/makswebsite:latest && docker tag makswebsite maks2531/makswebsite:$BUILD_NUMBER'
                 sh 'docker image ls'
             }
         }
@@ -17,16 +18,18 @@ pipeline {
             steps {
                 withCredentials([string(credentialsId: 'maks2531', variable: 'dockerpwd')]) {
                     sh 'echo "${dockerpwd}" | docker login --username maks2531 --password-stdin'
-                    sh 'docker push maks2531/makswebsite:$BUILD_NUMBER'
-                    build job: 'deploypipeline'
+                    sh 'docker push maks2531/makswebsite --all-tags'
                 }
             }
         }
     }
-post { 
+    post { 
         always { 
-            sh 'docker kill $(docker ps -q) ||echo "no running containers"'
+            sh 'docker kill $(docker ps -q) || echo "no running containers"'
             sh  'docker rmi -f $(docker images -aq)'
+        }
+        success {
+            build job: 'deploypipeline'
         }
     }
 }
