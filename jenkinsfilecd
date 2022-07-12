@@ -4,6 +4,7 @@ pipeline {
     stages {
         stage('Deploy') {
             steps {
+              sh 'sleep 15'
               sh "docker run -d -p 80:80 maks2531/makswebsite"
               }
           }
