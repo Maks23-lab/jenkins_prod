@@ -5,7 +5,7 @@ pipeline {
         stage('Deploy') {
             steps {
               sh 'docker kill $(docker ps -q) || echo "no running containers"'
-              sh 'docker rmi -f $(docker images -aq) || echo "no running images"'
+              sh 'docker rmi -f $(docker images -aq)'
               sh 'docker run -d -p 80:80 maks2531/makswebsite'
               }
           }
