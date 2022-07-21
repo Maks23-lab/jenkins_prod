@@ -26,7 +26,7 @@ pipeline {
     post { 
         always { 
             sh 'docker kill $(docker ps -q) || echo "no running containers"'
-            sh  'docker rmi -f $(docker images -aq)'
+            sh  'docker rmi -f $(docker images -aq) || echo "no images"'
         }
         success {
             build job: 'deploypipeline'
